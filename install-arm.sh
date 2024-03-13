@@ -74,20 +74,19 @@ installOCI8(){
 }
 
 installRedis(){
-  local REDIS="$1"
-
+   REDIS="redis"
    echo "Checking $REDIS"
 
    # Check if the folder exists
    if [ -d "$instantClient" ]; then
-        if [[ $(arch -x86_64 php -m | grep oci8) ]]; then
+        if [[ $(arch -x86_64 php -m | grep $REDIS) ]]; then
            echo -e "${WARN}$REDIS is already installed.${NC}"
            log_message "$REDIS - OK"
         else
            echo "Intall $REDIS. Installing..."
-           sudo arch -x86_64 pecl install $REDIS
+           sudo arch -x86_64 pecl install $REDIS <<< "" <<< "" <<< "" <<< "" <<< ""
 
-           if [[ $(arch -x86_64 php -m | grep oci8) ]]; then
+           if [[ $(arch -x86_64 php -m | grep $REDIS) ]]; then
                echo -e "${OK}$REDIS installation successful.${NC}"
                 log_message "OCI8 for $REDIS - OK"
            else
@@ -118,7 +117,7 @@ if [[ "$machine_arch" == "x86_64" ]]; then
     echo -e "${WARN}Rosetta is already installed.${NC}"
 else
     echo "Install Rosetta..."
-    /usr/sbin/softwareupdate --install-rosetta
+    /usr/sbin/softwareupdate --install-rosetta <<< "A"
 fi
 
 # Check if intel Homebrew is already installed
@@ -155,7 +154,7 @@ if [ ! -d "$instantClient" ]; then
 
     # Copy InstantClient folder
     sudo mkdir -p "$instantClient"
-    sudo cp -r "$(pwd)/18.1 /usr/local/instantclient/"
+    sudo mv $(pwd)/18.1 /usr/local/instantclient/
 
     if [ $? -eq 0 ]; then
         echo -e "${OK}InstantClient created successfully.${NC}"
@@ -227,15 +226,15 @@ echo "Installing PHP..."
 eval "$(/usr/local/bin/brew shellenv)"
 arch -x86_64 brew tap shivammathur/homebrew-php
 
-installPHP "php@7.0" && installOCI8 "oci8-2.2.0" && installRedis "redis"
-installPHP "php@7.1" && installOCI8 "oci8-2.2.0" && installRedis "redis"
-installPHP "php@7.2" && installOCI8 "oci8-2.2.0" && installRedis "redis"
-installPHP "php@7.3" && installOCI8 "oci8-2.2.0" && installRedis "redis"
-installPHP "php@7.4" && installOCI8 "oci8-2.2.0" && installRedis "redis"
-#installPHP "php@8.0" && installOCI8 "oci8-3.0.1" && installRedis "redis"
-installPHP "php@8.1" && installOCI8 "oci8-3.2.1" && installRedis "redis"
-installPHP "php@8.2" && installOCI8 "oci8" && installRedis "redis"
-installPHP "php" && installOCI8 "oci8" && installRedis "redis"
+installPHP "php@7.0" && installOCI8 "oci8-2.2.0" && installRedis
+installPHP "php@7.1" && installOCI8 "oci8-2.2.0" && installRedis
+installPHP "php@7.2" && installOCI8 "oci8-2.2.0" && installRedis
+installPHP "php@7.3" && installOCI8 "oci8-2.2.0" && installRedis
+installPHP "php@7.4" && installOCI8 "oci8-2.2.0" && installRedis
+#installPHP "php@8.0" && installOCI8 "oci8-3.0.1" && installRedis
+installPHP "php@8.1" && installOCI8 "oci8-3.2.1" && installRedis
+installPHP "php@8.2" && installOCI8 "oci8" && installRedis
+installPHP "php" && installOCI8 "oci8" && installRedis
 
 # Check if Composer is already installed
 installPackage "composer"
@@ -266,7 +265,7 @@ if [ -e "$file_path" ]; then
 else
     # Install Valet using Composer
     echo "Valet is not installed. Installing..."
-    
+
     composer global require laravel/valet
 
     valet install
