@@ -1,5 +1,5 @@
-# never-herd
-Mac PHP development automated setup
+# Laravel Never Herd
+Auto setup and install your development environment for Laravel.
 
 ## Included Apps
 * PHP 8.3, 8.2, 8.1, 7.4, 7.3, 7.2, 7.1, 7.0
@@ -22,7 +22,8 @@ Mac PHP development automated setup
 * ```usephp72```
 * ```usephp71```
 * ```usephp70```
-You may need to re-run ```arm valet park or link``` after switching from not recommended PHP version
+* ```usereset``` - when getting error when switching, you can try this command to reset to version PHP 8.3, and retry switching to your desired version
+* You may need to re-run ```arm valet park or link``` after switching from not recommended PHP version
 
 ### switch node version
 * ```nvm install {node_version}``` - install node version for more info visit https://github.com/nvm-sh/nvm
