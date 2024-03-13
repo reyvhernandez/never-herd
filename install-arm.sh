@@ -228,12 +228,12 @@ eval "$(/usr/local/bin/brew shellenv)"
 arch -x86_64 brew tap shivammathur/homebrew-php
 
 installPHP "php@7.0" && installOCI8 "oci8-2.2.0" && installRedis "redis"
-#installPHP "php@7.1" && installOCI8 "oci8-2.2.0" && installRedis "redis"
-#installPHP "php@7.2" && installOCI8 "oci8-2.2.0" && installRedis "redis"
-#installPHP "php@7.3" && installOCI8 "oci8-2.2.0" && installRedis "redis"
+installPHP "php@7.1" && installOCI8 "oci8-2.2.0" && installRedis "redis"
+installPHP "php@7.2" && installOCI8 "oci8-2.2.0" && installRedis "redis"
+installPHP "php@7.3" && installOCI8 "oci8-2.2.0" && installRedis "redis"
 installPHP "php@7.4" && installOCI8 "oci8-2.2.0" && installRedis "redis"
 #installPHP "php@8.0" && installOCI8 "oci8-3.0.1" && installRedis "redis"
-#installPHP "php@8.1" && installOCI8 "oci8-3.2.1" && installRedis "redis"
+installPHP "php@8.1" && installOCI8 "oci8-3.2.1" && installRedis "redis"
 installPHP "php@8.2" && installOCI8 "oci8" && installRedis "redis"
 installPHP "php" && installOCI8 "oci8" && installRedis "redis"
 
@@ -276,6 +276,18 @@ fi
   installPackage "git"
   installPackage "docker"
   installPackage "nvm"
+
+  # intall pyenv python version manager
+  installPackage "pyenv"
+  if ! arch -x86_64 brew list --formula | grep -q pyenv; then
+    arch -x86_64 pyenv install 2.7.18
+    arch -x86_64 pyenv global 2.7.18
+    # configure NVM
+    if ! grep -q 'PATH=$(pyenv root)/shims:$PATH' ~/.zprofile; then
+      echo 'PATH=$(pyenv root)/shims:$PATH' >> ~/.zprofile
+    fi
+  fi
+
   # configure NVM
   if ! grep -q 'export NVM_DIR' ~/.zprofile; then
     mkdir ~/.nvm
