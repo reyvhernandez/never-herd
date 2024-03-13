@@ -36,6 +36,12 @@ Auto setup and install your development environment for Laravel.
 Run on terminal:
 * ```ora``` - this will run colima and docker with oracle
 
+### Check Oracle if running
+Run on **NEW** terminal:
+* ```apple-bew``` - switch to apple-bew
+* ```colima start --arch x86_64 --cpu 2 --memory 4``` - run if colima is not running
+* ```docker ps``` - check if oracle is running
+
 ### create oracle user
 ```
 CREATE USER {user} IDENTIFIED BY {password} QUOTA UNLIMITED ON USERS;
