@@ -290,10 +290,9 @@ fi
   # configure NVM
   if ! grep -q 'export NVM_DIR' ~/.zprofile; then
     mkdir ~/.nvm
-    echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.zprofile
-
-    echo '[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm' >> ~/.zprofile
-    echo '[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion' >> ~/.zprofile
+        echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.zprofile
+        echo '[ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm' >> ~/.zprofile
+        echo '[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion' >> ~/.zprofile
   fi
 
  # ====================
