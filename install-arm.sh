@@ -229,8 +229,8 @@ echo "Installing PHP..."
 eval "$(/usr/local/bin/brew shellenv)"
 arch -x86_64 brew tap shivammathur/homebrew-php
 
-installPHP "php@7.0" && installOCI8 "oci8-2.2.0" && installRedis
-installPHP "php@7.1" && installOCI8 "oci8-2.2.0" && installRedis
+installPHP "php@7.0" && installOCI8 "oci8-2.2.0"
+installPHP "php@7.1" && installOCI8 "oci8-2.2.0"
 installPHP "php@7.2" && installOCI8 "oci8-2.2.0" && installRedis
 installPHP "php@7.3" && installOCI8 "oci8-2.2.0" && installRedis
 installPHP "php@7.4" && installOCI8 "oci8-2.2.0" && installRedis

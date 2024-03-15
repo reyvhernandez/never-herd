@@ -211,14 +211,14 @@ fi
 echo "Installing PHP..."
 
 brew tap shivammathur/homebrew-php
-installPHP "php@7.0" && installOCI8 "oci8-2.2.0" && installRedis
-#installPHP "php@7.1" && installOCI8 "oci8-2.2.0" && installRedis
-#installPHP "php@7.2" && installOCI8 "oci8-2.2.0" && installRedis
-#installPHP "php@7.3" && installOCI8 "oci8-2.2.0" && installRedis
-#installPHP "php@7.4" && installOCI8 "oci8-2.2.0" && installRedis
-#installPHP "php@8.0" && installOCI8 "oci8-3.0.1" && installRedis
-#installPHP "php@8.1" && installOCI8 "oci8-3.2.1" && installRedis
-#installPHP "php@8.2" && installOCI8 "oci8" && installRedis
+installPHP "php@7.0" && installOCI8 "oci8-2.2.0"
+installPHP "php@7.1" && installOCI8 "oci8-2.2.0"
+installPHP "php@7.2" && installOCI8 "oci8-2.2.0" && installRedis
+installPHP "php@7.3" && installOCI8 "oci8-2.2.0" && installRedis
+installPHP "php@7.4" && installOCI8 "oci8-2.2.0" && installRedis
+installPHP "php@8.0" && installOCI8 "oci8-3.0.1" && installRedis
+installPHP "php@8.1" && installOCI8 "oci8-3.2.1" && installRedis
+installPHP "php@8.2" && installOCI8 "oci8" && installRedis
 installPHP "php" && installOCI8 "oci8" && installRedis
 
 # Check if Composer is already installed
