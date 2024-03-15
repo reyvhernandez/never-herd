@@ -39,7 +39,10 @@ installPHP(){
         echo "Install and link $PHP_VERSION"
         installPackage "$PHP_VERSION"
 
-        brew unlink "php@$(php -v | head -n 1 | grep -oE 'PHP ([0-9]+\.[0-9]+)' | cut -d " " -f 2)"
+        if ! command -v php &> /dev/null
+        then
+          brew unlink "php@$(php -v | head -n 1 | grep -oE 'PHP ([0-9]+\.[0-9]+)' | cut -d " " -f 2)"
+        fi
         brew unlink "$PHP_VERSION"
         brew link --force "$PHP_VERSION"
 
@@ -207,18 +210,15 @@ fi
 # Install PHP 8.1 and corresponding OCI8
 echo "Installing PHP..."
 
-# user intel homebrew
-eval "$(/usr/local/bin/brew shellenv)"
 brew tap shivammathur/homebrew-php
-
 installPHP "php@7.0" && installOCI8 "oci8-2.2.0" && installRedis
-installPHP "php@7.1" && installOCI8 "oci8-2.2.0" && installRedis
-installPHP "php@7.2" && installOCI8 "oci8-2.2.0" && installRedis
-installPHP "php@7.3" && installOCI8 "oci8-2.2.0" && installRedis
-installPHP "php@7.4" && installOCI8 "oci8-2.2.0" && installRedis
+#installPHP "php@7.1" && installOCI8 "oci8-2.2.0" && installRedis
+#installPHP "php@7.2" && installOCI8 "oci8-2.2.0" && installRedis
+#installPHP "php@7.3" && installOCI8 "oci8-2.2.0" && installRedis
+#installPHP "php@7.4" && installOCI8 "oci8-2.2.0" && installRedis
 #installPHP "php@8.0" && installOCI8 "oci8-3.0.1" && installRedis
-installPHP "php@8.1" && installOCI8 "oci8-3.2.1" && installRedis
-installPHP "php@8.2" && installOCI8 "oci8" && installRedis
+#installPHP "php@8.1" && installOCI8 "oci8-3.2.1" && installRedis
+#installPHP "php@8.2" && installOCI8 "oci8" && installRedis
 installPHP "php" && installOCI8 "oci8" && installRedis
 
 # Check if Composer is already installed
@@ -226,12 +226,8 @@ installPackage "composer"
 
 # Check if Composer path already exists in .zprofile
 if ! grep -q '.composer/vendor/bin' ~/.zprofile; then
-    # Add Composer to PATH
-    # echo 'export PATH="$HOME/.composer/vendor/bin:$PATH"' >> ~/.zprofile
-
     # add alias
     cat "$(pwd)/zprofile_intel" >> ~/.zprofile
-
     source "/Users/$(whoami)/.zprofile"
 
     echo -e "${OK}Composer added to PATH successfully!${NC}"
@@ -256,58 +252,33 @@ else
     valet install
 fi
 
-  # Oracle and Docker
   installPackage "git"
-  installPackage "docker"
   installPackage "nvm"
-
-  # install pyenv python version manager
-  installPackage "pyenv"
-  if ! brew list --formula | grep -q pyenv; then
-    pyenv install 2.7.18
-    pyenv global 2.7.18
-    # configure NVM
-    if ! grep -q 'PATH=$(pyenv root)/shims:$PATH' ~/.zprofile; then
-      echo 'PATH=$(pyenv root)/shims:$PATH' >> ~/.zprofile
-    fi
-  fi
 
   # configure NVM
   if ! grep -q 'export NVM_DIR' ~/.zprofile; then
     mkdir ~/.nvm
     echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.zprofile
-
-    echo '[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm' >> ~/.zprofile
-    echo '[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion' >> ~/.zprofile
+    echo '[ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm' >> ~/.zprofile
+    echo '[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion' >> ~/.zprofile
   fi
 
-  # Check if Docker is installed
-  if ! brew list --formula | grep -q "docker"; then
-      CONTAINER_NAME="oracle-xe"
-      #Create Docker or Oracle
-      docker run -d --name $CONTAINER_NAME -p 1521:1521 -e ORACLE_PASSWORD=oracle gvenzl/oracle-xe
-
-      # Check if the container is running
-      if docker ps --format '{{.Names}}' | grep -q "^$CONTAINER_NAME$"; then
-          echo -e "${OK}Oracle installed and running.${NC}"
-          log_message "Oracle - OK"
-      else
-          echo -e "${FAIL}Oracle installation failed.${NC}"
-          log_message "Oracle - FAIL"
+  # install pyenv python version manager
+    installPackage "pyenv"
+    if ! brew list --formula | grep -q pyenv; then
+      pyenv install 2.7.18
+      pyenv global 2.7.18
+      # configure NVM
+      if ! grep -q 'PATH=$(pyenv root)/shims:$PATH' ~/.zprofile; then
+        echo 'PATH=$(pyenv root)/shims:$PATH' >> ~/.zprofile
       fi
-  else
-      echo "Checking Oracle."
-      CONTAINER_NAME="oracle-xe"
+    fi
 
-      docker start "$CONTAINER_NAME"
-      # Check if the container is running
-      if docker ps --format '{{.Names}}' | grep -q "^$CONTAINER_NAME$"; then
-          echo -e "${OK}Oracle installed and running.${NC}"
-          log_message "Oracle - OK"
-      else
-          echo -e "${FAIL}Oracle installation failed.${NC}"
-          log_message "Oracle - Fail"
-      fi
-  fi
+# brew install --cask openvpn-connect
+# brew install --cask phpstorm
+# brew install --cask microsoft-teams
+# brew install --cask zoom
+# brew install --cask docker
+# docker run -d --name oracle-xe -p 1521:1521 -e ORACLE_PASSWORD=oracle gvenzl/oracle-xe
 
 echo -e "${OK}Installation complete.${NC}"
