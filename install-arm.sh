@@ -39,7 +39,10 @@ installPHP(){
         echo "Install and link $PHP_VERSION"
         installPackage "$PHP_VERSION"
 
-        arch -x86_64 brew unlink "php@$(arch -x86_64 php -v | head -n 1 | grep -oE 'PHP ([0-9]+\.[0-9]+)' | cut -d " " -f 2)"
+        if ! command -v php &> /dev/null
+        then
+          arch -x86_64 brew unlink "php@$(php -v | head -n 1 | grep -oE 'PHP ([0-9]+\.[0-9]+)' | cut -d " " -f 2)"
+        fi
         arch -x86_64 brew unlink "$PHP_VERSION"
         arch -x86_64 brew link --force "$PHP_VERSION"
 
@@ -241,9 +244,6 @@ installPackage "composer"
 
 # Check if Composer path already exists in .zprofile
 if ! grep -q '.composer/vendor/bin' ~/.zprofile; then
-    # Add Composer to PATH
-    # echo 'export PATH="$HOME/.composer/vendor/bin:$PATH"' >> ~/.zprofile
-
     # add alias
     cat "$(pwd)/zprofile" >> ~/.zprofile
 
@@ -362,5 +362,10 @@ fi
       fi
   fi
  # End Apple Homebrew
+
+ # brew install --cask openvpn-connect
+ # brew install --cask phpstorm
+ # brew install --cask microsoft-teams
+ # brew install --cask zoom
 
 echo -e "${OK}Installation complete.${NC}"
