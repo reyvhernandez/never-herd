@@ -123,6 +123,8 @@ alias usephp71='php71'
 alias usephp70='php70'
 # multi php
 
+eval "$(/usr/local/bin/brew shellenv)"
+
 #composer
 export PATH=${PATH}:~/.composer/vendor/bin
 
