@@ -39,10 +39,7 @@ installPHP(){
         echo "Install and link $PHP_VERSION"
         installPackage "$PHP_VERSION"
 
-        if ! command -v php &> /dev/null
-        then
-          brew unlink "php@$(php -v | head -n 1 | grep -oE 'PHP ([0-9]+\.[0-9]+)' | cut -d " " -f 2)"
-        fi
+        brew unlink "php@$(php -v | head -n 1 | grep -oE 'PHP ([0-9]+\.[0-9]+)' | cut -d " " -f 2)"
         brew unlink "$PHP_VERSION"
         brew link --force "$PHP_VERSION"
 
@@ -216,7 +213,7 @@ installPHP "php@7.1" && installOCI8 "oci8-2.2.0"
 installPHP "php@7.2" && installOCI8 "oci8-2.2.0" && installRedis
 installPHP "php@7.3" && installOCI8 "oci8-2.2.0" && installRedis
 installPHP "php@7.4" && installOCI8 "oci8-2.2.0" && installRedis
-installPHP "php@8.0" && installOCI8 "oci8-3.0.1" && installRedis
+#installPHP "php@8.0" && installOCI8 "oci8-3.0.1" && installRedis
 installPHP "php@8.1" && installOCI8 "oci8-3.2.1" && installRedis
 installPHP "php@8.2" && installOCI8 "oci8" && installRedis
 installPHP "php" && installOCI8 "oci8" && installRedis

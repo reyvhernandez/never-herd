@@ -39,10 +39,7 @@ installPHP(){
         echo "Install and link $PHP_VERSION"
         installPackage "$PHP_VERSION"
 
-        if ! command -v php &> /dev/null
-        then
-          arch -x86_64 brew unlink "php@$(php -v | head -n 1 | grep -oE 'PHP ([0-9]+\.[0-9]+)' | cut -d " " -f 2)"
-        fi
+        arch -x86_64 brew unlink "php@$(php -v | head -n 1 | grep -oE 'PHP ([0-9]+\.[0-9]+)' | cut -d " " -f 2)"
         arch -x86_64 brew unlink "$PHP_VERSION"
         arch -x86_64 brew link --force "$PHP_VERSION"
 
