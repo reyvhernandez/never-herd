@@ -60,3 +60,11 @@ GRANT CONNECT, RESOURCE TO {user};
 
 ### Notice
 If you are switching from PHP 8.3 to PHP 7.0 it is not aviseable to install global composer package execpt valet as this will break when switching your version.
+
+### Valet Linking
+If you have env in your project, after successfully switching to your desired PHP version, this will automatically re-link your project.
+The PHP version that have auto re-link are the ff:
+* PHP 8.3
+* PHP 8.2
+* PHP 8.1
+* PHP 7.4
