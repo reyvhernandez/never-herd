@@ -10,7 +10,7 @@ reinstallValet(){
     local PHP_VERSION="$1"
     local VALET_VERSION="$2"
 
-    echo "This will re-install valet, you need to re-run park and/or link."
+    echo "This will re-install valet then will re-link if you have env file. You may need to re-link/re-run park."
 
     COMPOSER_VERSION="2"
     if [[ "$PHP_VERSION" = "php@7.0" || "$PHP_VERSION" = "php@7.1" || "$PHP_VERSION" = "php@7.2" || "$PHP_VERSION" = "php@7.3" ]]; then
@@ -80,20 +80,43 @@ valet3x(){
     fi
 }
 
+valetLink() {
+    # Check if the environment variable AUTO_LINK_VALET is set to true
+    if [[ "$AUTO_LINK_VALET" == "true" ]]; then
+        # Check if the .env file exists
+        if [[ -f ".env" ]]; then
+            echo "Environment variable AUTO_LINK_VALET is set. Running valet link..."
+            valet link
+        else
+            echo "No .env file found. Skipping valet link."
+        fi
+    else
+        echo "AUTO_LINK_VALET is not set or false. Skipping valet link."
+    fi
+}
+
 php83() {
     valetLatest "php"
+    valetLink
+    valet links
 }
 
 php82() {
     valet3x "php@8.2"
+    valetLink
+    valet links
 }
 
 php81() {
     valet3x "php@8.1"
+    valetLink
+    valet links
 }
 
 php74() {
     valet3x "php@7.4"
+    valetLink
+    valet links
 }
 
 php73() {
@@ -150,3 +173,7 @@ export PATH=${PATH}:~/.composer/vendor/bin
 
 # oracle
 alias ora="apple-brew && colima start --arch x86_64 --cpu 2 --memory 4 && docker start oracle-xe"
+
+# valet
+export AUTO_LINK_VALET=true
+
