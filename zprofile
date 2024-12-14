@@ -79,9 +79,12 @@ valet3x(){
         reinstallValet "$PHP_VERSION" "laravel/valet:^3"
     fi
 }
+php84() {
+    valetLatest "php@8.4"
+}
 
 php83() {
-    valetLatest "php"
+    valetLatest "php@8.3"
 }
 
 php82() {
