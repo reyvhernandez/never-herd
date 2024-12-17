@@ -80,7 +80,7 @@ valet3x(){
     fi
 }
 php84() {
-    valetLatest "php@8.4"
+    valetLatest "php"
 }
 
 php83() {
@@ -116,6 +116,7 @@ php70() {
 }
 
 alias usereset='resetValet'
+alias usephp84='php84'
 alias usephp83='php83'
 alias usephp82='php82'
 alias usephp81='php81'
